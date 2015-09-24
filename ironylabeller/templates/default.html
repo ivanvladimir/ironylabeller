@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="description" content="labells irony tweets"/>
+    <meta name="generator" content="flask"/>
+    <meta name="robots"    content="all" />
+    <meta name="keywords"  content="irony, labeller"/>
+    <meta name="copyright" content='2015 Ivan Vladimir Meza Ruiz'/>
+    <meta name="author"    content="Ivan Vladimir Meza Ruiz"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/vendor/modernizr.js"></script>
+
+    <title>{% block title %}{% endblock %} Irony labeller </title>
+
+</head>
+
+<body>
+
+	<nav class="top-bar" data-topbar>
+	<ul class="title-area">
+      <li class="name">
+        <h1>
+          <a href="#">
+            Irony labeller
+          </a>
+        </h1>
+      </li>
+      <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+    </ul>
+  </nav>
+
+
+<div class="row">
+<div class="large-12 columns">
+
+	{% block content %}{% endblock %}
+
+</div>
+</div>
+
+   <footer class="row">
+    <div class="large-12 columns">
+      <hr/>
+      <div class="row">
+        <div class="large-6 columns">
+          <p>© 2015 Ivan Vladimir Meza Ruiz </p>
+        </div>
+        <div class="large-6 columns">
+          <ul class="inline-list right">
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
