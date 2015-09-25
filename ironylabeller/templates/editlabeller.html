@@ -14,12 +14,12 @@
 {% endmacro %}
 
 
-{% block title %}Nuevo usuario{% endblock %}
+{% block title %}Editar usuario{% endblock %}
 
 {% block content %}
-<h1>Introduce los datos del nuevo usuario</h1> 
+<h1>Cambia la información del usuario</h1> 
 
-<form action={{url_for(".add_labeller")}} method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+<form action={{url_for(".edit_labeller")}} method="POST" accept-charset="utf-8" enctype="multipart/form-data">
     {{ form.csrf_token }}
     {{ render_field(form.username)}}
     {{ render_field(form.name)}}

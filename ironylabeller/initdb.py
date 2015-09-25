@@ -11,7 +11,7 @@ from database import init_db, db_session
 import sqlalchemy
 import sys
 import argparse
-from models import Admin
+from models import Admin, Task
 
 
 if __name__ == '__main__':
@@ -47,6 +47,17 @@ if __name__ == '__main__':
 
     u=Admin(opts.username,opts.passwd,opts.name)
     db_session.add(u)
+    db_session.commit()
+
+    # Adds communt task
+    t1=Task('Etiquetaciones comunes (1000)')
+    t2=Task('Etiquetaciones grupo uno (5500)')
+    t3=Task('Etiquetaciones grupo dos (5500)')
+    t4=Task('Etiquetaciones grupo tres (2000)')
+    db_session.add(t1)
+    db_session.add(t2)
+    db_session.add(t3)
+    db_session.add(t4)
     db_session.commit()
 
 

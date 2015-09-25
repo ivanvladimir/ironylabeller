@@ -22,12 +22,13 @@ from flask.ext.login import (
     logout_user,
     current_user,
     login_required)
-
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm.exc import MultipleResultsFound
 
 # Local imports
 from forms import LoginAdmin, NewLabeller
 from database import db_session
-from models import Admin, Labeller
+from models import Admin, Labeller, Task
 
 # Registering Blueprint
 dashboard = Blueprint('dashboard', __name__,template_folder='ironylabeller/templates')
@@ -68,12 +69,43 @@ def index():
 def add_labeller():
     '''Agregar usuario'''
     form = NewLabeller()
+    tasks = Task.query.all()
+    form.taskid.choices=[(task.id,task.name) for task in tasks]
     if form.cancel.data:
         return redirect(url_for('.index'))
     elif form.validate_on_submit():
-        l=Labeller(form.username.data,form.password.data,form.name.data)
+        l=Labeller(form.username.data,form.passwd.data,form.name.data,task=form.taskid.data)
         db_session.add(l)
         db_session.commit()
         return redirect(url_for('.index'))
     return render_template("newlabeller.html", form=form)
+
+@dashboard.route("/edit/labeller/<username>", methods=["GET", "POST"])
+def edit_labeller(username):
+    '''Agregar usuario'''
+    try:
+        l=Labeller.query.filter(Labeller.username==username).one()
+    except MultipleResultsFound, e:
+        return render_template('error.html',message="Más de un usuario con el mismo nombre encontrado")
+    except NoResultFound, e:
+        return render_template('error.html',message="Usuario no encontrado")
+    form=NewLabeller()
+    tasks = Task.query.all()
+    form.taskid.choices=[(task.id,task.name) for task in tasks]
+    if form.cancel.data:
+        return redirect(url_for('.index'))
+    if form.validate_on_submit():
+        form.populate_obj(l)
+        l=Labeller(form.username.data,form.password.data,form.name.data,task=form.task.data)
+        db_session.add(l)
+        db_session.commit()
+        return redirect(url_for('.index'))
+    return render_template("newlabeller.html", form=form)
+
+@dashboard.route("/list/labellers")
+def list_labellers():
+    '''Lista usuarions'''
+    ls=Labeller.query.all()
+    return render_template("listlabellers.html", labellers=ls)
+
 

@@ -11,6 +11,7 @@
 from flask_wtf import Form
 from wtforms import (
     StringField, 
+    SelectField,
     SubmitField, 
     IntegerField,
     SelectField,
@@ -21,15 +22,16 @@ from wtforms import (
 
 # Forms
 class LoginAdmin(Form):
-    admin    = StringField('Administrador', [validators.Required()])
-    password = PasswordField('Password', [validators.Required()])
-    save     = SubmitField("Entrar")
-    cancel   = SubmitField("Cancelar")
+    admin    = StringField(u'Administrador', [validators.Required()])
+    passwd   = PasswordField(u'Password', [validators.Required()])
+    save     = SubmitField(u"Entrar")
+    cancel   = SubmitField(u"Cancelar")
 
 class NewLabeller(Form):
-    username = StringField('Usuario', [validators.Required()])
-    name     = StringField('Nombre', [validators.Required()])
-    password = PasswordField('Password', [validators.Required()])
-    save     = SubmitField("Entrar")
-    cancel   = SubmitField("Cancelar")
+    username = StringField(u'Usuario', [validators.Required()])
+    name     = StringField(u'Nombre', [validators.Required()])
+    passwd   = PasswordField(u'Password', [validators.Required()])
+    taskid   = SelectField(u'Tarea asignada',  coerce=int)
+    save     = SubmitField(u"Crear")
+    cancel   = SubmitField(u"Cancelar")
 

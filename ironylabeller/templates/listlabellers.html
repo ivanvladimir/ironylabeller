@@ -1,0 +1,43 @@
+{% extends "default.html" %}
+
+{% macro render_field(field) %}
+  <dt>{{ field.label }}
+  <dd>{{ field(**kwargs)|safe }}
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </dd>
+{% endmacro %}
+
+
+{% block title %}Listar usuarions{% endblock %}
+
+{% block content %}
+<h1>Usuarios</h1> 
+
+<table>
+  <thead>
+    <tr>
+      <th with="400">Nombre</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for labeller in labellers %}
+	<td>{{labeller.name}}</td>
+    <td>
+		<a class="button round" href="{{url_for('.edit_labeller',username=labeller.username)}}">Editar</a>
+	</td>
+
+  {% endfor %}
+
+  </tbody>
+
+</table>
+{%endblock%}
+
+
