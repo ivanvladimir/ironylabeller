@@ -17,9 +17,7 @@ from flask_mail import Mail
 import ConfigParser
 
 # Local import
-#from dashboard import dashboard
 #from user import user
-#from info import infoB
 
 # Setting the WebAPP
 app = Flask('ironylabeller')
@@ -32,3 +30,7 @@ db_adapter = SQLAlchemyAdapter(db, User)
 user_manager = UserManager(db_adapter, app)
 
 
+from dashboard import dashboard
+from label import label
+app.register_blueprint(dashboard,url_prefix='/dashboard')
+app.register_blueprint(label,url_prefix='/')

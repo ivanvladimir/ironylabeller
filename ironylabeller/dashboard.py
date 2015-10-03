@@ -26,7 +26,7 @@ from ironylabeller import user_manager, db
 
 # Local imports
 from forms import NewUser, EditLabeller
-from models import User, Task, Role
+from models import User, Task, Role, Labelling
 
 # Registering Blueprint
 dashboard = Blueprint('dashboard', __name__,template_folder='ironylabeller/templates')
@@ -35,10 +35,10 @@ dashboard = Blueprint('dashboard', __name__,template_folder='ironylabeller/templ
 @roles_accepted('Admin')
 def logout():
     logout_user()
-    return redirect(url_for('.'))
+    return redirect(url_for('.index'))
 
 
-@dashboard.route("")
+@dashboard.route("/")
 @roles_accepted('Admin')
 def index():
     ''' Entrada principal'''
@@ -109,7 +109,7 @@ def edit_labeller(username):
     return render_template("editlabeller.html", form=form,username=username)
 
 @dashboard.route("/list/labellers")
-@login_required
+@roles_accepted('Admin')
 def list_labellers():
     '''Lista usuarions'''
     users=db.session.query(User).join(User.roles).\
@@ -118,10 +118,21 @@ def list_labellers():
     return render_template("listlabellers.html", users=users)
 
 @dashboard.route("/list/users")
-@login_required
+@roles_accepted('Admin')
 def list_users():
     '''Lista usuarions'''
     users=User.query.all()
     return render_template("listlabellers.html", users=users)
 
-
+@dashboard.route("/info/user/<username>", methods=["GET", "POST"])
+@roles_accepted('Admin')
+def info(username):
+    '''Editar usuario'''
+    user=User.query.filter(User.username==username).first()
+    labelled=Labelling.query.filter(Labelling.user_id==user.id and
+            Labelling.task_id==user.task.id).count()
+    tweets=len(user.task.tweets)
+    return render_template("info.html",
+            user=user,
+            labelled=labelled,tweets=tweets)
+ 

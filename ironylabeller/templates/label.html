@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Irónico o no irónico{% endblock %}
+
+{% block content %}
+
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="row">
+<div class="large-6 large-centered columns">
+<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">{{tweet.text}}<a href="https://twitter.com/arbolfest/status/{{tweet.tweetid}}"></a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+<br/>
+<br/>
+<br/>
+
+<form action="{{url_for('.index')}}" method="POST" class="form" role="form">
+<div class="row">
+<div class="large-6 large-centered columns">
+<div class="large-2 columns">
+	<input type="submit" class="button radius success" value="ironic"/>
+</div>
+<div class="large-2 large-offset-2 columns">
+	<input type="submit" class="button radius alert" value="noironic"/>
+</div>
+<div class="large-2 large-offset-2 columns">
+	<input type="submit" class="button radius" value="doubth"/>
+</div>
+</div>
+</div>
+</form>
+{%endblock%}
+
+

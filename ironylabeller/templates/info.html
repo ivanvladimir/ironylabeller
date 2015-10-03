@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Información usuario{% endblock %}
+
+{% block content %}
+
+<h1>Información {{user.username}}</h1>
+
+<p><strong>Nombre: </strong>{{user.name}}</p>
+<p><strong>Tarea: </strong>{{user.task.name}}</p>
+<p><strong>Progreso: </strong>{{labelled}}/{{tweets}}</p>
+<p>
+<strong>Roles</strong>:
+<ul>
+	{%for r in user.roles%}
+	<li>{{r.name}}</li>
+	{%endfor%}
+</ul>
+</p>
+<a class="button round small" href="{{url_for('.index')}}">Regresar</a>
+{%endblock%}
+
+

@@ -41,4 +41,10 @@ class EditLabeller(Form):
     save     = SubmitField(u"Actualizar")
     cancel   = SubmitField(u"Cancelar")
 
+class Label(Form):
+    ironic     = SubmitField(u"ironic")
+    noironic   = SubmitField(u"noironic")
+    doubth     = SubmitField(u"doubth")
+
+    
 
