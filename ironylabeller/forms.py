@@ -16,6 +16,7 @@ from wtforms import (
     SubmitField, 
     IntegerField,
     SelectField,
+    BooleanField,
     TextAreaField,
     validators, 
     PasswordField)
@@ -42,9 +43,12 @@ class EditLabeller(Form):
     cancel   = SubmitField(u"Cancelar")
 
 class Label(Form):
-    ironic     = SubmitField(u"ironic")
-    noironic   = SubmitField(u"noironic")
-    doubth     = SubmitField(u"doubth")
+    containsImage = BooleanField(u"¿Depende de imagen?")
+    containsLink = BooleanField(u"¿Depende de link?")
+    retweet       = BooleanField(u"¿Depende de retweet?")
+    ironic        = SubmitField(u"ironic")
+    noironic      = SubmitField(u"noironic")
+    doubt         = SubmitField(u"doubth")
 
     
 

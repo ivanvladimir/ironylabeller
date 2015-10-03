@@ -2,9 +2,8 @@
 {% block title %}Irónico o no irónico{% endblock %}
 
 {% block content %}
+{% from "flask_user/_macros.html" import render_field %}
 
-<br/>
-<br/>
 <br/>
 <br/>
 <div class="row">
@@ -15,19 +14,31 @@
 </div>
 <br/>
 <br/>
-<br/>
 
 <form action="{{url_for('.index')}}" method="POST" class="form" role="form">
 <div class="row">
 <div class="large-6 large-centered columns">
+<div class="large-4 columns">
+    {{ render_field(form.containsImage) }}
+</div>
+<div class="large-4 columns">
+    {{ render_field(form.containsLink) }}
+</div>
+<div class="large-4 columns">
+    {{ render_field(form.retweet) }}
+</div>
+</div>
+</div>
+<div class="row">
+<div class="large-6 large-centered columns">
 <div class="large-2 columns">
-	<input type="submit" class="button radius success" value="ironic"/>
+	<input name="submit" type="submit" class="button radius success" value="ironic"/>
 </div>
 <div class="large-2 large-offset-2 columns">
-	<input type="submit" class="button radius alert" value="noironic"/>
+	<input name="submit" type="submit" class="button radius alert" value="noironic"/>
 </div>
 <div class="large-2 large-offset-2 columns">
-	<input type="submit" class="button radius" value="doubth"/>
+	<input name="submit" type="submit" class="button radius" value="doubt"/>
 </div>
 </div>
 </div>

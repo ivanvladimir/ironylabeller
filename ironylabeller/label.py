@@ -42,21 +42,8 @@ def logout():
 @login_required
 def index():
     ''' Entrada principal'''
-    form=Label()
-    if request.method == "POST":
-        l=Labelling(
-            task_id=current_user.task.id,
-            user_id=current_user.id,
-            ironic=True,
-            labelled=True,
-            containsImage=False,
-            doubt=False,            
-            time = 1   
-                )
-        db.session.add(l)
-        db.session.commit()
+    if 'Admin' in [r.name for r in current_user.roles]:
         return redirect(url_for('.index'))
-
     last=Labelling.query.filter(Labelling.user_id==current_user.id and
             Labelling.task_id==current_user.task.id).count()
     if not last == 0:
@@ -67,4 +54,58 @@ def index():
     else:
         tweet=current_user.task.tweets[0]
 
-    return render_template("label.html",user=current_user,tweet=tweet)
+    form=Label()
+    if request.method == "POST":
+        if request.form['submit']=='ironic':
+            ironic=True
+            doubt=False
+        elif request.form['submit']=='noironic':
+            ironic=False
+            doubt=False
+        else:
+            ironic=None
+            doubt=True
+        try:
+            request.form['containsImage']
+            containsImage=True
+        except KeyError:
+            containsImage=False
+        try:
+            request.form['containsLink']
+            containsLink=True
+        except KeyError:
+            containsLink=False
+        try:
+            request.form['retweet']
+            retweet=True
+        except KeyError:
+            retweet=False
+        l=Labelling.query.filter(
+                Labelling.tweet_id==tweet.id).filter(
+                    Labelling.user_id==current_user.id and
+                    Labelling.task_id==current_user.task.id
+            ).first()
+        if  not l: 
+            l=Labelling(
+                task_id=current_user.task.id,
+                user_id=current_user.id,
+                tweet_id=tweet.id,
+                ironic=ironic,
+                retweet=retweet,
+                labelled=True,
+                containsImage=containsImage,
+                containsLink=containsLink,
+                doubt=doubt,            
+                time = 1)
+        else:
+            l.ironic=ironic
+            l.retweet=retweet
+            l.containsImage=containsImage
+            l.containsLink=containsLink
+            l.doubt=doubt
+            l.time=1
+        db.session.add(l)
+        db.session.commit()
+        return redirect(url_for('.index'))
+
+    return render_template("label.html",user=current_user,tweet=tweet,form=form)
