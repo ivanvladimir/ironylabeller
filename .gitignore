@@ -59,4 +59,6 @@ target/
 # Specific to ironylabeller
 data/
 conf/
+ironylabeller/*.sqlite
+*.sqlite
 

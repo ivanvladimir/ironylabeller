@@ -9,48 +9,26 @@
 
 # Flask imports
 from flask import Flask, url_for, redirect, render_template
-from flask.ext.login import LoginManager
-from flask.ext.triangle import Triangle
-from  flask.ext.restless import APIManager
-from flask.ext.login import (
-    login_user,
-    logout_user,
-    login_required)
-
+from flask_user import (
+    login_required, UserManager, UserMixin,SQLAlchemyAdapter)
+from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 # Other imports
 import ConfigParser
 
 # Local import
-from dashboard import dashboard
-#from user import userBB
+#from dashboard import dashboard
+#from user import user
 #from info import infoB
-from models import Admin, Labeller
 
 # Setting the WebAPP
 app = Flask('ironylabeller')
+app.config.from_pyfile("../conf/ironylabeller.cfg")
+mail = Mail(app) 
+db = SQLAlchemy(app)
 
-configParser = ConfigParser.RawConfigParser()
-configParser.optionxform = str
-configParser.readfp(open("conf/ironylabeller.cfg"))
-app.config.update(dict(configParser._sections['webapp']))
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-app.register_blueprint(dashboard,url_prefix='/dashboard')
-#app.register_blueprint(userB)
-#app.register_blueprint(infoB,url_prefix="/info")
-
-@login_manager.user_loader
-def load_user(userid):
-    try:
-        user=Labeller.query.filter(Labeller.userid==userid).one()
-    except :
-        try:
-            user=Admin.query.get(userid)
-        except:
-            return None
-    return user
-
+from models import User
+db_adapter = SQLAlchemyAdapter(db, User)
+user_manager = UserManager(db_adapter, app)
 
 

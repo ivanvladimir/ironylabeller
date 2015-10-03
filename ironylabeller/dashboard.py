@@ -17,95 +17,111 @@ from flask import (
     make_response, 
     current_app
     )
-from flask.ext.login import (
-    login_user,
-    logout_user,
-    current_user,
-    login_required)
-from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.orm.exc import MultipleResultsFound
+from flask_user import (
+    login_required,
+    roles_accepted)
+from sqlalchemy.orm import contains_eager
+from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
+from ironylabeller import user_manager, db
 
 # Local imports
-from forms import LoginAdmin, NewLabeller
-from database import db_session
-from models import Admin, Labeller, Task
+from forms import NewUser, EditLabeller
+from models import User, Task, Role
 
 # Registering Blueprint
 dashboard = Blueprint('dashboard', __name__,template_folder='ironylabeller/templates')
 
-# Entrada a administradores
-@dashboard.route("/login", methods=["GET", "POST"])
-def login():
-    form = LoginAdmin()
-    if form.cancel.data:
-        return redirect(url_for('index'))
-    elif form.validate_on_submit():
-        admin = Admin.query.filter(Admin.username==form.admin.data).one()
-        if admin.check_passwd(form.password.data):
-            admin.authenticated = True
-            db_session.add(admin)
-            db_session.commit()
-            login_user(admin, remember=True)
-            return redirect(url_for('.index'))
-        else:
-            return render_template("error.html", message="Nombre o password incorrecto")
-    return render_template("login.html", form=form)
-
 @dashboard.route("/logout")
+@roles_accepted('Admin')
 def logout():
     logout_user()
-    return redirect(url_for('.login'))
+    return redirect(url_for('.'))
 
 
-@dashboard.route("/", methods=["GET", "POST"])
+@dashboard.route("")
+@roles_accepted('Admin')
 def index():
     ''' Entrada principal'''
-    if not current_user.is_authenticated():
-        return render_template('dashboard.html')
-    else:
-        return redirect(url_for('.login'))
+    return render_template("dashboard.html")
 
-@dashboard.route("/add/labeller", methods=["GET", "POST"])
+@dashboard.route("/add/user", methods=["GET", "POST"])
+@roles_accepted('Admin')
 def add_labeller():
     '''Agregar usuario'''
-    form = NewLabeller()
+    form = NewUser()
     tasks = Task.query.all()
+    roles = Role.query.all()
     form.taskid.choices=[(task.id,task.name) for task in tasks]
+    form.roleids.choices=[(role.id,role.name) for role in roles]
     if form.cancel.data:
         return redirect(url_for('.index'))
     elif form.validate_on_submit():
-        l=Labeller(form.username.data,form.passwd.data,form.name.data,task=form.taskid.data)
-        db_session.add(l)
-        db_session.commit()
+        nuser = User(
+            username=form.username.data, active=True,
+            name=form.name.data,
+            taskid=form.taskid.data,
+            password=user_manager.hash_password(form.password.data))
+        for role_id in form.roleids.data:
+            role = Role.query.filter(Role.id==role_id).first()
+            if role:
+                nuser.roles.append(role)
+        db.session.add(nuser)
+        db.session.commit()
         return redirect(url_for('.index'))
     return render_template("newlabeller.html", form=form)
 
-@dashboard.route("/edit/labeller/<username>", methods=["GET", "POST"])
+@dashboard.route("/edit/user/<username>", methods=["GET", "POST"])
+@roles_accepted('Admin')
 def edit_labeller(username):
-    '''Agregar usuario'''
+    '''Editar usuario'''
     try:
-        l=Labeller.query.filter(Labeller.username==username).one()
+        l=User.query.filter(User.username==username).one()
     except MultipleResultsFound, e:
         return render_template('error.html',message="Más de un usuario con el mismo nombre encontrado")
     except NoResultFound, e:
         return render_template('error.html',message="Usuario no encontrado")
-    form=NewLabeller()
+    form=EditLabeller()
     tasks = Task.query.all()
+    roles = Role.query.all()
     form.taskid.choices=[(task.id,task.name) for task in tasks]
+    form.roleids.choices=[(role.id,role.name) for role in roles]
+ 
     if form.cancel.data:
         return redirect(url_for('.index'))
     if form.validate_on_submit():
-        form.populate_obj(l)
-        l=Labeller(form.username.data,form.password.data,form.name.data,task=form.task.data)
-        db_session.add(l)
-        db_session.commit()
+        l.username=form.username.data
+        l.name=form.name.data
+        l.taskid=int(form.taskid.data)
+        if len(form.password.data)>0:
+            l.password=user_manager.hash_password(form.password.data)
+        l.roles[:]=[]
+        for role_id in form.roleids.data:
+            role = Role.query.filter(Role.id==role_id).first()
+            if role:
+                l.roles.append(role)
+        db.session.add(l)
+        db.session.commit()
         return redirect(url_for('.index'))
-    return render_template("newlabeller.html", form=form)
+    form.taskid.data=l.taskid
+    form.username.data=l.username
+    form.name.data=l.name
+    form.roleids.data=[role.id for role in l.roles]
+    return render_template("editlabeller.html", form=form,username=username)
 
 @dashboard.route("/list/labellers")
+@login_required
 def list_labellers():
     '''Lista usuarions'''
-    ls=Labeller.query.all()
-    return render_template("listlabellers.html", labellers=ls)
+    users=db.session.query(User).join(User.roles).\
+                options(contains_eager(User.roles)).\
+                    filter(Role.name == 'Labeller')
+    return render_template("listlabellers.html", users=users)
+
+@dashboard.route("/list/users")
+@login_required
+def list_users():
+    '''Lista usuarions'''
+    users=User.query.all()
+    return render_template("listlabellers.html", users=users)
 
 

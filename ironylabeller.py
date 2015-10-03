@@ -27,6 +27,12 @@ if __name__ == '__main__':
             help="Verbose mode [Off]")
     opts = p.parse_args()
 
+
+    from ironylabeller.dashboard import dashboard
+    app.register_blueprint(dashboard,url_prefix='/dashboard')
+    #app.register_blueprint(user)
+
+
     app.run(debug=opts.debug,
             host=opts.host,
             port=opts.port)
