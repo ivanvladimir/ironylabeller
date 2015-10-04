@@ -33,4 +33,4 @@ user_manager = UserManager(db_adapter, app)
 from dashboard import dashboard
 from label import label
 app.register_blueprint(dashboard,url_prefix='/dashboard')
-app.register_blueprint(label,url_prefix='/')
+app.register_blueprint(label,url_prefix='')

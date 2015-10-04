@@ -35,12 +35,24 @@
     </ul>
 	<section class="top-bar-section">
 	<ul class="right">
-		<li>
-			<a href="{{url_for('user.logout')}}">Cerrar seción</a>
-		</li>
 	  	<li class="divider"></li>
+		<li>
+			<a href="{{url_for('.logout')}}">Cerrar seción</a>
+		</li>
     </ul>
 	</section>
+	{% if supervisor %}
+	<section class="top-bar-section">
+	<ul class="right">
+	  	<li class="divider"></li>
+		<li>
+			<a href="{{url_for('.supervisor')}}">Supervisor</a>
+		</li>
+    </ul>
+	</section>
+	{% endif %}
+
+
   </nav>
 
 

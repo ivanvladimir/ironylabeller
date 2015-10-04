@@ -34,9 +34,7 @@ dashboard = Blueprint('dashboard', __name__,template_folder='ironylabeller/templ
 @dashboard.route("/logout")
 @roles_accepted('Admin')
 def logout():
-    logout_user()
-    return redirect(url_for('.index'))
-
+    return redirect(url_for('user.logout',next="/dashboard"))
 
 @dashboard.route("/")
 @roles_accepted('Admin')
