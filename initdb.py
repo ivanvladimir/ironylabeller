@@ -70,8 +70,10 @@ if __name__ == '__main__':
         password=app.user_manager.hash_password('password'))
     user1.roles.append(Role(name='Admin',label=u"Administrative role"))
     db.session.add(user1)
-    role_ = Role(name="Labeller", label=u"Labeller role")
-    db.session.add(role_)
+    role1 = Role(name="Labeller", label=u"Labeller role")
+    role2 = Role(name="Superviser", label=u"Superviser role")
+    db.session.add(role1)
+    db.session.add(role2)
     db.session.commit()
 
 
