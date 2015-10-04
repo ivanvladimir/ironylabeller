@@ -62,15 +62,15 @@ class Task(db.Model):
     tweets        = db.relationship("Tweet")
 
 class Labelling(db.Model):
-    __tablename__ = 'labellings'
-    id            = db.Column(db.Integer, primary_key=True)
-    labelled      = db.Column(db.Boolean(), nullable=False)
-    ironic        = db.Column(db.Boolean(), nullable=True)
-    containsImage = db.Column(db.Boolean(), nullable=False)
-    containsLink  = db.Column(db.Boolean(), nullable=False)
-    retweet       = db.Column(db.Boolean(), nullable=False)
-    doubt         = db.Column(db.Boolean(), nullable=False)
-    time          = db.Column(db.Float(), nullable=False)
+    __tablename__  = 'labellings'
+    id             = db.Column(db.Integer, primary_key=True)
+    labelled       = db.Column(db.Boolean(), nullable=False)
+    ironic         = db.Column(db.Boolean(), nullable=True)
+    dependsImage   = db.Column(db.Boolean(), nullable=False)
+    dependsLink    = db.Column(db.Boolean(), nullable=False)
+    dependsRetweet = db.Column(db.Boolean(), nullable=False)
+    doubt          = db.Column(db.Boolean(), nullable=False)
+    time           = db.Column(db.Float(), nullable=False)
 
     # Relationships
     tweet_id = db.Column(db.Integer, db.ForeignKey('tweets.id'))

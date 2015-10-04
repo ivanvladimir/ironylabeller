@@ -66,20 +66,20 @@ def index():
             ironic=None
             doubt=True
         try:
-            request.form['containsImage']
-            containsImage=True
+            request.form['dependsImage']
+            dependsImage=True
         except KeyError:
-            containsImage=False
+            dependsImage=False
         try:
-            request.form['containsLink']
-            containsLink=True
+            request.form['dependsLink']
+            dependsLink=True
         except KeyError:
-            containsLink=False
+            dependsLink=False
         try:
-            request.form['retweet']
-            retweet=True
+            request.form['dependsRetweet']
+            dependsRetweet=True
         except KeyError:
-            retweet=False
+            dependsRetweet=False
         l=Labelling.query.filter(
                 Labelling.tweet_id==tweet.id).filter(
                     Labelling.user_id==current_user.id and
@@ -91,17 +91,17 @@ def index():
                 user_id=current_user.id,
                 tweet_id=tweet.id,
                 ironic=ironic,
-                retweet=retweet,
+                dapandsRetweet=dapendsRetweet,
                 labelled=True,
-                containsImage=containsImage,
-                containsLink=containsLink,
+                dependsImage=dependsImage,
+                depdndsLink=dependsLink,
                 doubt=doubt,            
                 time = 1)
         else:
             l.ironic=ironic
-            l.retweet=retweet
-            l.containsImage=containsImage
-            l.containsLink=containsLink
+            l.dependsRetweet=dependsRetweet
+            l.dependsImage=dependsImage
+            l.dependsLink=dependsLink
             l.doubt=doubt
             l.time=1
         db.session.add(l)

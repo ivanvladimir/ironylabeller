@@ -43,12 +43,12 @@ class EditLabeller(Form):
     cancel   = SubmitField(u"Cancelar")
 
 class Label(Form):
-    containsImage = BooleanField(u"¿Depende de imagen?")
-    containsLink = BooleanField(u"¿Depende de link?")
-    retweet       = BooleanField(u"¿Depende de retweet?")
-    ironic        = SubmitField(u"ironic")
-    noironic      = SubmitField(u"noironic")
-    doubt         = SubmitField(u"doubth")
+    dependsImage   = BooleanField(u"¿Depende de imagen?")
+    dependsLink    = BooleanField(u"¿Depende de link?")
+    dependsRetweet = BooleanField(u"¿Depende de retweet?")
+    ironic         = SubmitField(u"ironic")
+    noironic       = SubmitField(u"noironic")
+    doubt          = SubmitField(u"doubth")
 
     
 
