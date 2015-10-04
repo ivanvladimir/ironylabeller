@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Listar etiquetaciones recientes{% endblock %}
+
+{% block content %}
+<h1>Última etiquetaciones</h1> 
+
+<table>
+  <thead>
+    <tr>
+      <th>Usuario</th>
+      <th>Tarea</th>
+      <th>Tweet</th>
+      <th>Irónico</th>
+      <th>Duda</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for l in labellings %}
+  	<tr>
+	<td>{{l.user.username}}</td>
+	<td>{{l.task.id}}</td>
+	<td>{{l.tweet.text}}</td>
+	<td>{{l.ironic}}</td>
+	<td>{{l.doubt}}</td>
+	</tr>
+  {% endfor %}
+  </tbody>
+
+</table>
+{%endblock%}
+
+
