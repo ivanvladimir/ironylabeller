@@ -112,12 +112,13 @@ def index():
         if not len(current_user.task.tweets)== last:
             tweet=current_user.task.tweets[last]
         else:
-            return render_template('finish.html')
+            return render_template('finish.html',supervisor=supervisor)
     else:
         tweet=current_user.task.tweets[0]
 
     form=Label()
     if request.method == "POST":
+        print(request.form)
         if request.form['submit']=='ironic':
             ironic=True
             doubt=False
@@ -142,6 +143,12 @@ def index():
             dependsRetweet=True
         except KeyError:
             dependsRetweet=False
+        try:
+            request.form['time']
+            time=float(request.form['time'])/1000
+        except KeyError:
+            time=0.0
+        
         l=Labelling.query.filter(
                 Labelling.tweet_id==tweet.id).filter(
                     Labelling.user_id==current_user.id and
@@ -158,14 +165,14 @@ def index():
                 dependsImage=dependsImage,
                 dependsLink=dependsLink,
                 doubt=doubt,            
-                time = 1)
+                time = time)
         else:
             l.ironic=ironic
             l.dependsRetweet=dependsRetweet
             l.dependsImage=dependsImage
             l.dependsLink=dependsLink
             l.doubt=doubt
-            l.time=1
+            l.time=time
         db.session.add(l)
         db.session.commit()
         return redirect(url_for('.index'))
