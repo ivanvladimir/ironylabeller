@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}Ayuda{% endblock %}
+
+{% block content %}
+<h1>Etiquetación de ironía</h1> 
+
+<h3>Definición</h3>
+
+<p><strong>IRNONIA</strong> Expresión en tono de burla de una significación contraria (o diferente) a la del enunciado que se pone de manifiesto por el contexto o la pronunciación, el gesto, etc.</p>
+
+<p><strong>SARCASMO</strong> Es la clase de ironía que se caracteriza por la intención cruel, hostil o maliciosa que expresa</p>
+
+<h3>Instrucciones</h3>
+
+<p>Dado un <em>tweet</em> peguntarse si la intención de lo dicho es todo lo contrario</p>
+
+<div class="row">
+<div class="large-6 large-centered columns">
+<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">Tener exámenes de 9 a 14, comer en 15 minutos y volver a estudiar. La buena vida del estudiante. #ironia<a href="https://twitter.com/arbolfest/status/607892239637999616"></a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+
+<p>Los tweets irán pasando consecutivamente, para cada uno habrá que eligir la opción de <em>irónico</em>, <em>no irónico</em> y <em>duda</em> como se muestra a continuación</p>
+
+<div class="row">
+<div class="large-6 large-centered columns">
+<div class="large-2 columns">
+	<input name="submit" type="submit" class="button radius success" value="ironic"/>
+</div>
+<div class="large-2 large-offset-2 columns">
+	<input name="submit" type="submit" class="button radius alert" value="noironic"/>
+</div>
+<div class="large-2 large-offset-2 columns">
+	<input name="submit" type="submit" class="button radius" value="doubt"/>
+</div>
+</div>
+</div>
+
+<p>Además es importante marcar si el tweet es parte de una conversacion, contiene una imagen o un link.</p>
+
+<div class="large-6 large-centered columns">
+<div class="large-4 columns">
+    <div class="form-group  ">
+        
+            
+            <label for="dependsImage" class="control-label">Depende de imagen</label>
+        
+        <input class="form-control" id="dependsImage" name="dependsImage" type="checkbox" value="y">
+        
+    </div>
+</div>
+<div class="large-4 columns">
+    <div class="form-group  ">
+        
+            
+            <label for="dependsLink" class="control-label">Contiene link</label>
+        
+        <input class="form-control" id="dependsLink" name="dependsLink" type="checkbox" value="y">
+        
+    </div>
+</div>
+<div class="large-4 columns">
+    <div class="form-group  ">
+        
+            
+            <label for="dependsRetweet" class="control-label">Viene de conversación</label>
+        
+        <input class="form-control" id="dependsRetweet" name="dependsRetweet" type="checkbox" value="y">
+        
+    </div>
+</div>
+</div>
+</div>
+
+<h3>Ejemplos</h3>
+
+<h4><em>Tweet</em> dudoso</h4>
+
+<div class="row">
+<div class="large-6 large-centered columns">
+<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">Dale preferencia a lo que verdaderamente vale la pena :) #viernes #contentillu #hoySeBebe #ironia<a href="https://twitter.com/arbolfest/status/614526222941462529"></a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+
+<h4><em>Tweet</em> con imágen</h4>
+
+<div class="row">
+<div class="large-6 large-centered columns">
+<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">Extendieron las primarias del Psuv hasta las 10 pm por este gentío en las colas #SARCASMO http://t.co/gW9U7uJABS<a href="https://twitter.com/arbolfest/status/615428694618673152"></a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+
+<h4><em>Tweet</em> con un link</h4>
+
+<div class="row">
+<div class="large-6 large-centered columns">
+<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">Jajaja le guardará rencor? Lo accidentes pasan... hasta en el vestidor!! 😨😨 @RefrigeradorNFL  https://t.co/yX0jDK5UmX<a href="https://twitter.com/arbolfest/status/631476744772411392"></a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+
+<h4><em>Tweet</em> en una conversación</h4>
+
+<div class="row">
+<div class="large-6 large-centered columns">
+<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">@Saandra015 Nah, solo llevas 5 años repitiendo dia a dia que tu cumple es el 1 de julio, pero no, no eres pesada... 😅😂😂 #ironia<a href="https://twitter.com/arbolfest/status/615992204633485316"></a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+
+<h3>Consideraciones</h3>
+
+
+<h4><em>Tweet</em> como pregunta</h4>
+<p>Si el <em>tweet</em> es una pregunta o petición, muy probablemente no es irónico</p>
+
+<div class="row">
+<div class="large-6 large-centered columns">
+<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">Si les digo que se tiren de un puente a los del grupo, lo harian(?) #sarcasmo<a href="https://twitter.com/arbolfest/status/612372545560543232"></a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+
+<h4><em>Tweet</em> que niega el tweet</h4>
+<p>No es irónico cuando el mismo <em>tweet</em> niega la idea original, por ejemplo usando expresiones como: <em>no es cierto, mentira</em> </p>
+
+<div class="row">
+<div class="large-6 large-centered columns">
+<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">Ni yo me la creo pues JAJAJA #sarcasmo #ElAmorApesta #HubieraNacidoMuerta JAJAJAJAJAJAJAJAJA nociertooooo.<a href="https://twitter.com/arbolfest/status/623692052291649536"></a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+
+<h4><em>Tweets</em> que hablan sobre hechos irónicos</h4>
+<p>Algunos <em>tweets</em> hablan sobre hechos que son ironicos, pero la expresión no es irónica.</p>
+
+<div class="row">
+<div class="large-6 large-centered columns">
+<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">La Comisión Europea son una pandilla rojos...... #Ironia https://t.co/Yvm5b7mimg<a href="https://twitter.com/arbolfest/status/621672435335733248"></a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+
+<div class="row">
+<div class="large-6 large-centered columns">
+<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">Un pais con costas en ambos oceanos pero sin accesos  publicos para las playas #ironia<a href="https://twitter.com/arbolfest/status/619256526545403904"></a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+
+
+<h4><em>Tweets</em> que hablan sobre ironía</h4>
+<p>Algunos <em>tweets</em> hablan sobre el fenómeno de ironía o sarcasmo, eso no los hace irónicos.</p>
+
+<div class="row">
+<div class="large-6 large-centered columns">
+<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">No te pierdas mañana nuestro programa que como siempre estará cargado de mucho #Sarcasmo http://t.co/Ts0A2f9H8k<a href="https://twitter.com/arbolfest/status/608473675197603840"></a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
+
+
+<h4><em>Tweets</em> sin formato</h4>
+<p>Aveces el <em>tweet</em> aparece sin formato oficial de <em>twitter</em> como se muestra</p>
+
+<div class="row">
+	<div class="large-6 large-centered columns">
+		<blockquote class="twitter-tweet" lang="en"><p lang="es" dir="ltr">el hecho de que sea futbolista, seleccionado y gane mas que tu (de eso no estoy seguro) no quiere decir nada.<a href="https://twitter.com/arbolfest/status/615061005643591680"></a></blockquote>
+		<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+	</div>
+</div>
+
+<p>Etiquetarlo aunque no esté la información completa.</p>
+
+{%endblock%}
+
+

@@ -41,14 +41,14 @@ def logout():
 def supervisor():
     ''' Entrada principal'''
     doubts=Labelling.query.filter(Labelling.doubt==True).filter(Labelling.labelled==False).count()
-    return render_template("supervisor.html",ndoubts=doubts)
+    return render_template("supervisor.html",ndoubts=doubts,supervisor=True)
 
 @label.route("/latest",methods=["GET", "POST"])
 @roles_accepted('Superviser')
 def latest():
     '''Imprime las últimas etiquetaciones'''
     labellings=Labelling.query.order_by(Labelling.id.desc()).limit(20)
-    return render_template("latest.html",labellings=labellings)
+    return render_template("latest.html",labellings=labellings,supervisor=True)
 
 
 
@@ -106,7 +106,7 @@ def index():
         return redirect(url_for('dashboard.index'))
     if 'Superviser' in roles:
         supervisor=True
-    last=Labelling.query.filter(Labelling.user_id==current_user.id and
+    last=Labelling.query.filter(Labelling.user_id==current_user.id).filter(
             Labelling.task_id==current_user.task.id).count()
     if not last == 0:
         if not len(current_user.task.tweets)== last:
@@ -172,3 +172,11 @@ def index():
 
     return render_template("label.html",
             user=current_user,tweet=tweet,form=form,supervisor=supervisor,doubt=True)
+
+
+@label.route("/help")
+def help():
+    '''Ayuda'''
+    return render_template("help.html")
+
+

@@ -13,16 +13,30 @@
       <th>Tweet</th>
       <th>Irónico</th>
       <th>Duda</th>
+      <th>Pendiente</th>
     </tr>
   </thead>
   <tbody>
   {% for l in labellings %}
-  	<tr>
+	{% if l.doubt and not l.labelled %}
+  	<tr style="color:#990000;">
+	{% else %}
+  	<tr sytle="color:#992222;">
+	{% endif %}
+	<tr>
 	<td>{{l.user.username}}</td>
 	<td>{{l.task.id}}</td>
 	<td>{{l.tweet.text}}</td>
 	<td>{{l.ironic}}</td>
 	<td>{{l.doubt}}</td>
+	<td>
+	{% if l.doubt and not l.labelled %}
+	<strong>Sí</strong>
+	{%else%}
+	No
+	{%endif%}
+	</td>
+
 	</tr>
   {% endfor %}
   </tbody>

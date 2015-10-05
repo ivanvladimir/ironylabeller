@@ -46,12 +46,20 @@
 	<ul class="right">
 	  	<li class="divider"></li>
 		<li>
-			<a href="{{url_for('.supervisor')}}">Supervisor</a>
+			<a href="{{url_for('label.supervisor')}}">Supervisor</a>
 		</li>
     </ul>
 	</section>
 	{% endif %}
-
+	<section class="top-bar-section">
+	<ul class="right">
+	  	<li class="divider"></li>
+		<li>
+			<a href="{{url_for('label.help')}}">Ayuda</a>
+		</li>
+    </ul>
+	</section>
+	
 
   </nav>
 
